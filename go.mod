@@ -4,10 +4,12 @@ go 1.20
 
 require (
 	github.com/99designs/gqlgen v0.17.36
+	github.com/DATA-DOG/go-txdb v0.1.7
 	github.com/friendsofgo/errors v0.9.2
 	github.com/go-chi/chi v1.5.4
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-migrate/migrate v3.5.4+incompatible
+	github.com/google/uuid v1.3.0
 	github.com/stretchr/testify v1.8.2
 	github.com/vektah/gqlparser/v2 v2.5.8
 	github.com/volatiletech/null/v8 v8.1.2
