@@ -28,6 +28,12 @@ type RefreshTokenInput struct {
 	Token string `json:"token"`
 }
 
+type UpdateLinkInput struct {
+	ID      string `json:"id"`
+	Title   string `json:"title"`
+	Address string `json:"address"`
+}
+
 type User struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`

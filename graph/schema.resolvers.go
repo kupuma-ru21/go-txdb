@@ -15,6 +15,11 @@ func (r *mutationResolver) CreateLink(ctx context.Context, input model.CreateLin
 	return r.Srv.CreateLink(ctx, input)
 }
 
+// UpdateLink is the resolver for the updateLink field.
+func (r *mutationResolver) UpdateLink(ctx context.Context, input model.UpdateLinkInput) (*model.Link, error) {
+	return r.Srv.UpdateLink(ctx, input)
+}
+
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {
 	panic(fmt.Errorf("not implemented: CreateUser - createUser"))

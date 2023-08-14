@@ -19,6 +19,12 @@ input CreateLinkInput {
   address: String!
 }
 
+input UpdateLinkInput {
+  id: ID!
+  title: String!
+  address: String!
+}
+
 input RefreshTokenInput{
   token: String!
 }
@@ -35,6 +41,7 @@ input Login {
 
 type Mutation {
   createLink(input: CreateLinkInput!): Link!
+  updateLink(input: UpdateLinkInput!): Link!
   createUser(input: NewUser!): String!
   login(input: Login!): String!
   # we'll talk about this in authentication section
