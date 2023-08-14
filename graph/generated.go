@@ -53,7 +53,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateLink   func(childComplexity int, input model.NewLink) int
+		CreateLink   func(childComplexity int, input model.CreateLinkInput) int
 		CreateUser   func(childComplexity int, input model.NewUser) int
 		Login        func(childComplexity int, input model.Login) int
 		RefreshToken func(childComplexity int, input model.RefreshTokenInput) int
@@ -70,7 +70,7 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error)
+	CreateLink(ctx context.Context, input model.CreateLinkInput) (*model.Link, error)
 	CreateUser(ctx context.Context, input model.NewUser) (string, error)
 	Login(ctx context.Context, input model.Login) (string, error)
 	RefreshToken(ctx context.Context, input model.RefreshTokenInput) (string, error)
@@ -132,7 +132,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateLink(childComplexity, args["input"].(model.NewLink)), true
+		return e.complexity.Mutation.CreateLink(childComplexity, args["input"].(model.CreateLinkInput)), true
 
 	case "Mutation.createUser":
 		if e.complexity.Mutation.CreateUser == nil {
@@ -199,8 +199,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
+		ec.unmarshalInputCreateLinkInput,
 		ec.unmarshalInputLogin,
-		ec.unmarshalInputNewLink,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputRefreshTokenInput,
 	)
@@ -322,10 +322,10 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 func (ec *executionContext) field_Mutation_createLink_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.NewLink
+	var arg0 model.CreateLinkInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewLink2goᚑtxdbᚋgraphᚋmodelᚐNewLink(ctx, tmp)
+		arg0, err = ec.unmarshalNCreateLinkInput2goᚑtxdbᚋgraphᚋmodelᚐCreateLinkInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -628,7 +628,7 @@ func (ec *executionContext) _Mutation_createLink(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateLink(rctx, fc.Args["input"].(model.NewLink))
+		return ec.resolvers.Mutation().CreateLink(rctx, fc.Args["input"].(model.CreateLinkInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2888,6 +2888,44 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
+func (ec *executionContext) unmarshalInputCreateLinkInput(ctx context.Context, obj interface{}) (model.CreateLinkInput, error) {
+	var it model.CreateLinkInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"title", "address"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "title":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Title = data
+		case "address":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("address"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Address = data
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputLogin(ctx context.Context, obj interface{}) (model.Login, error) {
 	var it model.Login
 	asMap := map[string]interface{}{}
@@ -2920,44 +2958,6 @@ func (ec *executionContext) unmarshalInputLogin(ctx context.Context, obj interfa
 				return it, err
 			}
 			it.Password = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputNewLink(ctx context.Context, obj interface{}) (model.NewLink, error) {
-	var it model.NewLink
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"title", "address"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "title":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Title = data
-		case "address":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("address"))
-			data, err := ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Address = data
 		}
 	}
 
@@ -3620,6 +3620,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
+func (ec *executionContext) unmarshalNCreateLinkInput2goᚑtxdbᚋgraphᚋmodelᚐCreateLinkInput(ctx context.Context, v interface{}) (model.CreateLinkInput, error) {
+	res, err := ec.unmarshalInputCreateLinkInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3695,11 +3700,6 @@ func (ec *executionContext) marshalNLink2ᚖgoᚑtxdbᚋgraphᚋmodelᚐLink(ctx
 
 func (ec *executionContext) unmarshalNLogin2goᚑtxdbᚋgraphᚋmodelᚐLogin(ctx context.Context, v interface{}) (model.Login, error) {
 	res, err := ec.unmarshalInputLogin(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNNewLink2goᚑtxdbᚋgraphᚋmodelᚐNewLink(ctx context.Context, v interface{}) (model.NewLink, error) {
-	res, err := ec.unmarshalInputNewLink(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

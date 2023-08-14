@@ -8,7 +8,7 @@ import (
 )
 
 type LinkService interface {
-	CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error)
+	CreateLink(ctx context.Context, input model.CreateLinkInput) (*model.Link, error)
 }
 
 type Services interface {

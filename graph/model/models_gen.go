@@ -2,6 +2,11 @@
 
 package model
 
+type CreateLinkInput struct {
+	Title   string `json:"title"`
+	Address string `json:"address"`
+}
+
 type Link struct {
 	ID      string `json:"id"`
 	Title   string `json:"title"`
@@ -12,11 +17,6 @@ type Link struct {
 type Login struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
-}
-
-type NewLink struct {
-	Title   string `json:"title"`
-	Address string `json:"address"`
 }
 
 type NewUser struct {

@@ -14,7 +14,7 @@ type linkService struct {
 	exec boil.ContextExecutor
 }
 
-func (u *linkService) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
+func (u *linkService) CreateLink(ctx context.Context, input model.CreateLinkInput) (*model.Link, error) {
 	newLink := db.Link{
 		Title:   null.StringFrom(input.Title),
 		Address: null.StringFrom(input.Address),

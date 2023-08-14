@@ -11,7 +11,7 @@ import (
 )
 
 // CreateLink is the resolver for the createLink field.
-func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) (*model.Link, error) {
+func (r *mutationResolver) CreateLink(ctx context.Context, input model.CreateLinkInput) (*model.Link, error) {
 	return r.Srv.CreateLink(ctx, input)
 }
 
