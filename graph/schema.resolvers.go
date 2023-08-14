@@ -37,7 +37,7 @@ func (r *mutationResolver) RefreshToken(ctx context.Context, input model.Refresh
 
 // Links is the resolver for the links field.
 func (r *queryResolver) Links(ctx context.Context) ([]*model.Link, error) {
-	panic(fmt.Errorf("not implemented: Links - links"))
+	return r.Srv.GetLinks(ctx)
 }
 
 // Mutation returns MutationResolver implementation.
